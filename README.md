@@ -49,3 +49,12 @@ Beispiel `mcp_config.json` (wird in deiner Cursor/Claude Config eingetragen):
 }
 ```
 Die detaillierten Skills und Guidelines findest du im Ordner `auramed-plugin/`.
+
+## Support & Spenden ❤️
+AuraMed "Open Core" ist ein Open-Source-Projekt und komplett kostenlos nutzbar. 
+Wenn dir das Projekt gefällt und es dir den Alltag erleichtert, freuen wir uns riesig über eine kleine Spende, um die Weiterentwicklung zu unterstützen!
+
+☕ [Buy me a coffee](https://buymeacoffee.com/kolbeckdigital) (Beispiel-Link)
+
+**Keine Lust auf Selbst-Hosting und Datenbank-Pflege?**
+Das Importieren der BfArM-Datenbank ist mühsam. Wenn du AuraMed einfach "Plug & Play" nutzen möchtest, bieten wir unter [getauramed.de](https://getauramed.de) einen gehosteten SaaS-Tarif an. Dort übernehmen wir die wöchentlichen Datenbank-Updates für dich!
