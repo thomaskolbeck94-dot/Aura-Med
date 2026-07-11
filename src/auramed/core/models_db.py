@@ -13,6 +13,8 @@ class Client(Base):
     stripe_subscription_id = Column(String, unique=True, index=True, nullable=True)
     checkout_session_id = Column(String, unique=True, index=True, nullable=True)
     is_active = Column(Boolean, default=True)
+    telegram_chat_id = Column(String, unique=True, index=True, nullable=True)
+    ha_webhook_url = Column(String, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     
     api_keys = relationship("APIKey", back_populates="client")

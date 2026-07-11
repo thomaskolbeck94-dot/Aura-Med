@@ -11,7 +11,18 @@ from auramed.models import ScanResponse
 from auramed.core.database import is_valid_api_key, increment_api_key_usage
 from auramed.core.scanner import process_scan
 from auramed.core.homeassistant import push_scan_to_homeassistant
-from auramed.routers import stripe as stripe_router
+# Optional SaaS Features (Open Core Pattern)
+try:
+    from auramed.core.telegram_bot import handle_telegram_update
+    HAS_TELEGRAM = True
+except ImportError:
+    HAS_TELEGRAM = False
+
+try:
+    from auramed.routers import stripe as stripe_router
+    HAS_STRIPE = True
+except ImportError:
+    HAS_STRIPE = False
 
 # Setup Rate Limiting
 limiter = Limiter(key_func=get_remote_address)
@@ -31,7 +42,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(stripe_router.router)
+if HAS_STRIPE:
+    app.include_router(stripe_router.router)
 
 api_key_header = APIKeyHeader(name="x-api-key", auto_error=False)
 
@@ -81,3 +93,12 @@ async def scan_package(
         background_tasks.add_task(push_scan_to_homeassistant, response.data)
         
     return response
+
+if HAS_TELEGRAM:
+    @app.post("/api/v1/telegram/webhook")
+    async def telegram_webhook(update: dict, background_tasks: BackgroundTasks):
+        """
+        Webhook für Telegram Bot. Nimmt Nachrichten entgegen und verarbeitet sie asynchron.
+        """
+        background_tasks.add_task(handle_telegram_update, update)
+        return {"status": "ok"}

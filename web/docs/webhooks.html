@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraMed | Smart Home Webhooks einrichten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .docs-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 0 20px;
+    }
+    .docs-content h2 { margin-top: 40px; color: #fff; }
+    .docs-content p { color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .docs-content code { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: #fff; }
+    .docs-content .warning { background: rgba(255,60,60,0.1); border-left: 4px solid #ff3c3c; padding: 15px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="bg-glow blob-1"></div>
+  <div class="bg-glow blob-2"></div>
+
+  <nav class="navbar glass">
+    <div class="nav-container">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        AuraMed
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">Zurück zur Startseite</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="docs-container">
+    <div class="section-title" style="text-align: left; margin-bottom: 40px;">
+      <h1>Smart Home Webhooks</h1>
+      <p>So verbindest du den AuraMed Telegram Bot mit deinem Smart Home System.</p>
+    </div>
+
+    <div class="docs-content glass" style="padding: 40px; border-radius: 24px;">
+      
+      <h2>1. Home Assistant (Nabu Casa)</h2>
+      <p>Wenn du Home Assistant nutzt, ist der einfachste Weg über einen Nabu Casa Webhook. Das geht so:</p>
+      <ol style="color: rgba(255,255,255,0.7); line-height: 1.8; margin-left: 20px;">
+        <li>Gehe in Home Assistant auf <strong>Einstellungen > Automatisierungen & Szenen</strong>.</li>
+        <li>Klicke auf <strong>Automatisierung erstellen</strong>.</li>
+        <li>Wähle als Auslöser (Trigger) <strong>Webhook</strong> aus.</li>
+        <li>Home Assistant generiert nun eine URL. Wenn du Nabu Casa nutzt, lautet diese z.B. <code>https://hooks.nabu.casa/abcd1234...</code>.</li>
+        <li>Kopiere diese URL und füge sie in den AuraMed Telegram-Bot ein!</li>
+      </ol>
+      
+      <div class="warning">
+        <strong>Wichtig:</strong> Wenn du kein Nabu Casa benutzt, muss dein Home Assistant von außen erreichbar sein (z.B. über Cloudflare Tunnel oder DuckDNS), damit unser Server die Daten an deinen lokalen Webhook senden kann.
+      </div>
+
+      <h2>2. n8n (Node-RED Alternativen)</h2>
+      <p>Wenn du visuelle Workflows mit n8n baust:</p>
+      <ol style="color: rgba(255,255,255,0.7); line-height: 1.8; margin-left: 20px;">
+        <li>Erstelle einen neuen Workflow und füge den Node <strong>Webhook</strong> als Trigger hinzu.</li>
+        <li>Stelle die Methode auf <strong>POST</strong>.</li>
+        <li>Kopiere die "Production URL" (z.B. <code>https://n8n.deine-domain.de/webhook/1234...</code>).</li>
+        <li>Sende diese URL an den AuraMed Telegram Bot.</li>
+        <li>Sende ein Test-Foto an den Bot. Im n8n Webhook-Node erscheint nun das fertige JSON mit Name, PZN und Verfallsdatum!</li>
+      </ol>
+
+      <h2>3. Ich nutze kein Smart Home (Telegram Only)</h2>
+      <p>Kein Problem! Wenn du AuraMed einfach nur als komfortablen Scanner in Telegram nutzen möchtest, antworte dem Bot bei der Einrichtung einfach mit dem Wort <strong>Telegram</strong>.</p>
+      <p>Wir speichern dann keinen Webhook und der Bot schickt dir die Ergebnisse deines Medikamenten-Scans (inklusive Nachbestell-Link) einfach direkt als Chat-Nachricht zurück.</p>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 AuraMed by Kolbeck Digital. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+</body>
+</html>

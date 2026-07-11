@@ -180,6 +180,64 @@ def increment_api_key_usage(api_key_str: str) -> bool:
     finally:
         db.close()
 
+def link_telegram_account(api_key_str: str, chat_id: str) -> bool:
+    """
+    Links a Telegram chat ID to a client's API Key.
+    Returns True if successful, False if the key is invalid.
+    """
+    db = SessionLocal()
+    try:
+        key_record = db.query(APIKey).filter(APIKey.key == api_key_str, APIKey.is_active == True).first()
+        if not key_record:
+            return False
+            
+        client = db.query(Client).filter(Client.id == key_record.client_id, Client.is_active == True).first()
+        if not client:
+            return False
+            
+        client.telegram_chat_id = str(chat_id)
+        db.commit()
+        return True
+    except Exception:
+        db.rollback()
+        return False
+    finally:
+        db.close()
+
+def set_ha_webhook_url(chat_id: str, webhook_url: str) -> bool:
+    """
+    Sets the Home Assistant webhook URL for a client based on their Telegram chat ID.
+    """
+    db = SessionLocal()
+    try:
+        client = db.query(Client).filter(Client.telegram_chat_id == str(chat_id), Client.is_active == True).first()
+        if not client:
+            return False
+            
+        client.ha_webhook_url = webhook_url
+        db.commit()
+        return True
+    except Exception:
+        db.rollback()
+        return False
+    finally:
+        db.close()
+
+def get_client_by_telegram(chat_id: str) -> Optional[Client]:
+    """
+    Returns the Client associated with a Telegram chat ID, if active.
+    Note: The returned Client is detached from the session.
+    """
+    db = SessionLocal()
+    try:
+        # Eager load api_keys to check quota later if needed
+        client = db.query(Client).filter(Client.telegram_chat_id == str(chat_id), Client.is_active == True).first()
+        if client:
+            db.expunge(client)
+        return client
+    finally:
+        db.close()
+
 def lookup_pzn(pzn: str) -> Optional[Dict]:
     """
     Looks up a medication by its PZN, joining the 3 BfArM tables to construct a complete dictionary.

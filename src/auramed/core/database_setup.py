@@ -21,8 +21,16 @@ def init_saas_db():
         conn.execute("ALTER TABLE api_keys_saas ADD COLUMN daily_scans INTEGER DEFAULT 0;")
         conn.commit()
     except sqlite3.OperationalError:
-        # Column already exists
         pass
+        
+    # Auto-migration for telegram fields (added in v0.3)
+    try:
+        conn.execute("ALTER TABLE clients ADD COLUMN telegram_chat_id TEXT UNIQUE;")
+        conn.execute("ALTER TABLE clients ADD COLUMN ha_webhook_url TEXT;")
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass
+        
     finally:
         if 'conn' in locals():
             conn.close()
