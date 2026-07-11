@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "auramed-core": {
+      "command": "python",
+      "args": ["-m", "auramed.mcp_server"],
+      "env": {
+        "OPENPZN_API_KEY": "your-key-here"
+      }
+    }
+  }
+}

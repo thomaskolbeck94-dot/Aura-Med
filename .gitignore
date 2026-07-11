@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Secrets & Data (WICHTIG!)
+*.json
+!plugin.json
+!mcp_config.json
+google-credentials.json
+data/
+*.sqlite
+*.db
+
+# macOS
+.DS_Store

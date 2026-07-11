@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: auramed-api
+    restart: always
+    ports:
+      # Port 8000 für die API
+      - "8000:8000"
+    volumes:
+      # Die SQLite DB und eventuelle Uploads persistent auf dem Server speichern
+      - ./data:/app/data
+    env_file:
+      - .env
+
+  frontend:
+    image: nginx:alpine
+    container_name: auramed-frontend
+    restart: always
+    ports:
+      # Port 8080 für die Landingpage
+      - "8080:80"
+    volumes:
+      # Den web/ Ordner als Basis für den Nginx Webserver einhängen
+      - ./web:/usr/share/nginx/html:ro

@@ -1,0 +1,15 @@
+fastapi>=0.104.0
+uvicorn>=0.23.2
+mcp>=0.1.0
+pylibdmtx>=0.1.10
+opencv-python-headless>=4.8.1
+google-cloud-vision==3.4.4
+httpx==0.27.0
+Pillow>=10.0.0
+pillow-heif>=0.14.0
+pydantic>=2.4.2
+sqlite3; python_version < "3.0" # sqlite3 is built-in for modern python, added just for reference. We don't need to pip install it.
+pytest>=7.4.2
+sqlalchemy>=2.0.0
+stripe>=7.0.0
+setuptools>=68.0.0
