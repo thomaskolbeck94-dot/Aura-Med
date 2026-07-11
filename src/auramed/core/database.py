@@ -9,6 +9,8 @@ DB_PATH = os.environ.get("AURAMED_DB_PATH", "auramed.db")
 def get_connection():
     """Returns a connection to the SQLite database."""
     conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA synchronous=NORMAL;")
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -67,6 +69,8 @@ def init_db():
         
         conn.commit()
 
+from auramed.core.database_setup import init_saas_db
+init_saas_db()
 
 def import_dsv_data(table_name: str, dsv_string: str):
     """
@@ -115,13 +119,31 @@ def populate_mock_data():
 """
     import_dsv_data("REFERENCE_SUBSTANCE", rse_data)
 
+from auramed.core.database_setup import SessionLocal
+from auramed.core.models_db import APIKey, Client
+
 def is_valid_api_key(api_key: str) -> bool:
     """
-    Dummy-Funktion für Open Source Release.
-    In der SaaS-Version wird hier die Datenbank geprüft.
+    Prüft, ob ein übergebener API-Key in der Datenbank existiert und der Kunde aktiv ist.
     """
-    return True
-
+    if not api_key:
+        return False
+        
+    db = SessionLocal()
+    try:
+        # Check API key table
+        key_record = db.query(APIKey).filter(APIKey.key == api_key, APIKey.is_active == True).first()
+        if not key_record:
+            return False
+            
+        # Check Client status
+        client = db.query(Client).filter(Client.id == key_record.client_id, Client.is_active == True).first()
+        if not client:
+            return False
+            
+        return True
+    finally:
+        db.close()
 
 def lookup_pzn(pzn: str) -> Optional[Dict]:
     """

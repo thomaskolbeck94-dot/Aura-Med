@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuraMed | Die intelligente Medikamenten-API für dein Smart Home</title>
+    <meta name="description" content="AuraMed bietet eine BfArM-konforme Haltbarkeitsprüfung, lokalen GS1-Scanner und intelligentes OCR-Fallback in einem einzigen Microservice." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Background Effects -->
+    <div class="bg-glow blob-1"></div>
+    <div class="bg-glow blob-2"></div>
+
+    <nav class="navbar glass">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          AuraMed
+        </div>
+        <div class="nav-links">
+          <a href="#problem">Das Problem</a>
+          <a href="#features">Features</a>
+          <a href="#developer">Für Entwickler</a>
+          <a href="#pricing" class="btn-primary-outline">Preise</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menü öffnen">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Overlay Menu -->
+    <div class="mobile-overlay" id="mobile-overlay">
+      <button class="close-menu-btn" id="close-menu-btn" aria-label="Menü schließen">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="mobile-nav-links">
+        <a href="#problem" class="mobile-link">Das Problem</a>
+        <a href="#features" class="mobile-link">Features</a>
+        <a href="#developer" class="mobile-link">Für Entwickler</a>
+        <a href="#pricing" class="btn-primary w-full text-center mobile-link">Preise</a>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-content">
+        <div class="badge">🚀 v1.0.0 Live - Zero UI Architecture</div>
+        <h1>Die intelligente Medikamenten-API <br><span class="text-gradient">für dein Smart Home.</span></h1>
+        <p class="hero-subtitle">BfArM-konforme Haltbarkeitsprüfung, rasend schneller GS1-Datamatrix-Scanner und intelligentes OCR-Fallback in einem einzigen Microservice.</p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn-primary">Pro-Abo sichern (9€/mtl.)</a>
+          <a href="#developer" class="btn-secondary">API Docs lesen</a>
+        </div>
+      </div>
+      <div class="hero-visual glass">
+        <div class="code-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="code-title">POST /api/v1/scan</span>
+        </div>
+        <pre><code class="language-json">{
+  "success": true,
+  "data": {
+    "pzn": "00259869",
+    "medication_name": "Aspirin Complex Beutel",
+    "expiry_date": "31.05.2028",
+    "refill_link": "https://auramed.io/refill/00259869"
+  }
+}</code></pre>
+      </div>
+    </header>
+
+    <section id="problem" class="problem-section">
+      <div class="section-title">
+        <h2>Schluss mit abgelaufenen Medikamenten.</h2>
+        <p>Die manuelle Verwaltung der Hausapotheke kostet Nerven und birgt Risiken.</p>
+      </div>
+      <div class="problem-solution-grid">
+        <div class="ps-card problem-card glass hover-lift">
+          <div class="ps-icon red-icon">⚠️</div>
+          <h3>Das Problem</h3>
+          <ul class="ps-list">
+            <li><strong>Unübersichtliche Inventur:</strong> Wer weiß schon genau, was ganz hinten im Medizinschrank steht?</li>
+            <li><strong>Verfallene Wirkstoffe:</strong> Abgelaufene Medikamente verlieren ihre Wirkung oder werden potenziell gesundheitsschädlich.</li>
+            <li><strong>Schlechte Lesbarkeit:</strong> Eingeprägte Haltbarkeitsdaten auf Blistern oder Schachteln sind im Alltag oft unleserlich.</li>
+            <li><strong>Mühsame Dateneingabe:</strong> Niemand möchte 20 Packungen nach einem Apothekenbesuch manuell in eine App eintippen.</li>
+          </ul>
+        </div>
+        <div class="ps-card solution-card glass hover-lift">
+          <div class="ps-icon green-icon">✨</div>
+          <h3>Die Lösung mit AuraMed</h3>
+          <ul class="ps-list">
+            <li><strong>Ein Foto genügt:</strong> Knipse ein Bild der Verpackung, unsere API erledigt den Rest in Millisekunden.</li>
+            <li><strong>Immer informiert:</strong> Automatische Push-Warnungen in deinem Smart Home, bevor etwas abläuft.</li>
+            <li><strong>Künstliche Intelligenz:</strong> Unser OCR-Fallback liest selbst zerknitterte oder schlecht gedruckte Daten zuverlässig aus.</li>
+            <li><strong>Nahtlose Integration:</strong> Perfekt einsetzbar für Home Assistant, n8n, Node-RED oder dein eigenes App-Projekt.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section">
+      <div class="section-title">
+        <h2>Warum AuraMed?</h2>
+        <p>Entwickelt für maximale Performance und absolute Datensicherheit.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">⚡</div>
+          <h3>Local-First & Privacy</h3>
+          <p>Dank intelligenter PZN-Validierung scannen wir einen Großteil der Medikamente lokal. Personenbezogene Daten oder Gesundheitsinformationen verlassen niemals unverschlüsselt dein Zuhause. Die API arbeitet komplett zustandslos.</p>
+        </div>
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">☁️</div>
+          <h3>Google Cloud OCR Fallback</h3>
+          <p>Unleserliche, zerknitterte Codes oder spiegelnde Oberflächen? Wenn der lokale Datamatrix-Scan fehlschlägt, springt unser KI-gestütztes OCR-Fallback ein und liest das Haltbarkeitsdatum nahtlos als reinen Text aus den Bildpixeln.</p>
+        </div>
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">🏠</div>
+          <h3>Smart Home Ready</h3>
+          <p>Ein strikter "Zero-UI" Ansatz. Wir liefern dir reine, strukturierte Daten. Verbinde AuraMed per n8n oder Make.com direkt mit Telegram, WhatsApp oder binde es als Sensor in dein Home Assistant Dashboard ein.</p>
+        </div>
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">🔄</div>
+          <h3>BfArM-Datenbank Integration</h3>
+          <p>Wir synchronisieren wöchentlich mit den offiziellen Datenbanken des Bundesinstituts für Arzneimittel und Medizinprodukte (BfArM). So erhältst du nicht nur das Ablaufdatum, sondern auch den exakten Medikamentennamen und verifizierte PZN-Daten.</p>
+        </div>
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">💻</div>
+          <h3>Developer-Friendly API</h3>
+          <p>Keine komplexen SDKs oder unnötiger Overhead. Eine einfache REST-Schnittstelle mit standardisierten JSON-Responses macht die Integration in jedes bestehende System zum absoluten Kinderspiel.</p>
+        </div>
+        <div class="feature-card glass hover-lift">
+          <div class="feature-icon">🔓</div>
+          <h3>Open Source Core</h3>
+          <p>Volle Transparenz und Kontrolle. Der Kern von AuraMed ist quelloffen. Du kannst den Service komplett selbst hosten oder bequem auf unsere hochverfügbare Cloud-API zurückgreifen.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="developer" class="developer-section">
+      <div class="section-title">
+        <h2>Gebaut für Entwickler.</h2>
+        <p>Einfache, REST-basierte API. Keine komplizierten SDKs nötig.</p>
+      </div>
+      <div class="developer-content glass">
+        <div class="dev-grid">
+          <div class="dev-text">
+            <h3>Einfache Integration</h3>
+            <p>Unsere REST-basierte API nimmt ein einfaches <code>multipart/form-data</code> Foto entgegen und liefert dir in wenigen Millisekunden ein strukturiertes JSON-Objekt zurück. Perfekt für Webhooks, Edge-Functions oder direkte Smart Home Anbindungen.</p>
+            <ul class="dev-list">
+              <li>✓ Keine komplexen SDKs oder Libraries notwendig</li>
+              <li>✓ Unterstützt JPG, PNG und WEBP Bildformate</li>
+              <li>✓ Direkte Rückgabe von PZN, Name, Ablaufdatum und Chargennummer</li>
+              <li>✓ Hochverfügbare Infrastruktur in der Cloud API Variante</li>
+            </ul>
+          </div>
+          <div class="dev-code-blocks">
+            <div class="code-tab-header">
+              <span class="active">cURL</span>
+              <span>Python</span>
+            </div>
+            <pre><code class="language-bash">curl -X POST https://api.getauramed.de/api/v1/scan \
+  -H "x-api-key: aura_live_dein_key" \
+  -F "image=@/pfad/zur/medikamenten_schachtel.jpg"</code></pre>
+            <pre class="python-code" style="display:none;"><code class="language-python">import requests
+
+url = "https://api.getauramed.de/api/v1/scan"
+headers = {"x-api-key": "aura_live_dein_key"}
+files = {"image": open("medikament.jpg", "rb")}
+
+response = requests.post(url, headers=headers, files=files)
+print(response.json())</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing-section">
+      <div class="section-title">
+        <h2>Einfaches, faires Pricing.</h2>
+        <p>Starten Sie sofort oder hosten Sie selbst.</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Open Source Tier -->
+        <div class="pricing-card glass">
+          <h3>Open Core</h3>
+          <div class="price">Kostenlos</div>
+          <p class="pricing-desc">Self-Hosted für Entwickler.</p>
+          <ul class="pricing-features">
+            <li>✓ Voller Zugriff auf den Quellcode</li>
+            <li>✓ Lokaler GS1-Scanner</li>
+            <li>✓ Eigener Google Cloud Account nötig</li>
+            <li>✓ Eigene BfArM Updates verwalten</li>
+          </ul>
+          <a href="https://github.com/thomaskolbeck94-dot/Aura-Med" target="_blank" class="btn-secondary w-full">Zum GitHub Repo</a>
+        </div>
+        <!-- SaaS Tier -->
+        <div class="pricing-card glass featured">
+          <div class="popular-badge">Am Beliebtesten</div>
+          <h3>AuraMed Cloud API</h3>
+          <div class="price">9€ <span class="price-period">/ Monat</span></div>
+          <p class="pricing-desc">Das "Rundum-Sorglos" Paket für Ihr Smart Home.</p>
+          <ul class="pricing-features">
+            <li>✓ Keine Server-Einrichtung nötig</li>
+            <li>✓ Sofort nutzbarer API-Key</li>
+            <li>✓ Inklusive unlimitiertem Cloud OCR</li>
+            <li>✓ <strong>PZN-Datenbank inkludiert:</strong> Wir laden und pflegen die riesigen BfArM Datensätze (zweiwöchentlich)</li>
+          </ul>
+          <a href="https://buy.stripe.com/ihr_generierter_link" target="_blank" class="btn-primary w-full">API-Key generieren</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2026 AuraMed by Kolbeck Digital. Alle Rechte vorbehalten.</p>
+      </div>
+    </footer>
+    <script type="module" src="/main.js"></script>
+    <script>
+      // Mobile Menu Overlay
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      const mobileOverlay = document.getElementById('mobile-overlay');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      if (mobileMenuBtn && mobileOverlay && closeMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+
+        const closeMenu = () => {
+          mobileOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        };
+
+        closeMenuBtn.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+      }
+
+      // Code Tabs in Developer Section
+      const tabs = document.querySelectorAll('.code-tab-header span');
+      const pres = document.querySelectorAll('.dev-code-blocks pre');
+      
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          pres.forEach(p => p.style.display = 'none');
+          tab.classList.add('active');
+          pres[index].style.display = 'block';
+        });
+      });
+    </script>
+  </body>
+</html>
