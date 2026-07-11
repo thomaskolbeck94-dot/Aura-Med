@@ -12,7 +12,7 @@ def generate_refill_link(pzn: str, partner: str = "shop_apotheke") -> str:
     
     if partner == "shop_apotheke":
         # Example URL structure for Shop-Apotheke
-        return f"https://www.shop-apotheke.com/search.htm?i={clean_pzn}&affiliate={affiliate_id}"
+        return f"https://www.shop-apotheke.com/search.htm?searchTerm={clean_pzn}&affiliate={affiliate_id}"
     elif partner == "docmorris":
         # Example URL structure for DocMorris
         return f"https://www.docmorris.de/search?query={clean_pzn}&partner={affiliate_id}"
