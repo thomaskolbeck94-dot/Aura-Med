@@ -44,7 +44,7 @@ async def verify_api_key(api_key: str = Security(api_key_header)):
     is_valid_key = is_valid_api_key(api_key)
     
     if not is_valid_key:
-        stripe_link = os.getenv("STRIPE_PAYMENT_LINK", "https://buy.stripe.com/your_link_here")
+        stripe_link = os.getenv("STRIPE_PAYMENT_LINK", "https://buy.stripe.com/6oUcN41Tj6f53b2cklb7y00")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"API Key fehlt oder ungültig. Hole dir deinen Key unter: {stripe_link}"
