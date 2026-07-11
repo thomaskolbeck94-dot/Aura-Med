@@ -3,7 +3,11 @@ from typing import Optional, Dict
 
 try:
     from google.cloud import vision
-except ImportError:
+    VISION_AVAILABLE = True
+except Exception:
+    # Fallback für lokales Testing auf Macs mit Python 3.14 (Protobuf Bug)
+    VISION_AVAILABLE = False
+    print("Warnung: google.cloud.vision konnte nicht geladen werden. OCR-Fallback ist lokal deaktiviert.")
     vision = None
 
 def run_ocr_extraction(image_bytes: bytes) -> Dict[str, Optional[str]]:
@@ -16,7 +20,7 @@ def run_ocr_extraction(image_bytes: bytes) -> Dict[str, Optional[str]]:
     Returns a dictionary with extracted fields (if found).
     """
     if vision is None:
-        raise RuntimeError("Google Cloud Vision SDK is not installed or configured.")
+        return {"pzn": None, "expiry_date": None, "raw_text": "OCR lokal deaktiviert wegen Python 3.14 Inkompatibilität."}
 
     client = vision.ImageAnnotatorClient()
     image = vision.Image(content=image_bytes)
