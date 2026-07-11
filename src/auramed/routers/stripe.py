@@ -59,6 +59,20 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
             db.commit()
             
             print(f"Stripe Webhook: Created Key {raw_key} for {customer_email}")
+            
+    elif event['type'] in ['customer.subscription.deleted', 'invoice.payment_failed']:
+        # Block API key if subscription cancelled or payment failed
+        data_object = event['data']['object']
+        customer_id = data_object.get('customer')
+        
+        if customer_id:
+            client = db.query(Client).filter(Client.stripe_customer_id == customer_id).first()
+            if client:
+                client.is_active = False
+                for api_key in client.api_keys:
+                    api_key.is_active = False
+                db.commit()
+                print(f"Stripe Webhook: Disabled access for Client {client.email}")
 
     return {"status": "success"}
 

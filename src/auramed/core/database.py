@@ -141,6 +141,12 @@ def is_valid_api_key(api_key: str) -> bool:
         if not client:
             return False
             
+        # Increment usage counter
+        import datetime
+        key_record.total_scans += 1
+        key_record.last_scan_at = datetime.datetime.now(datetime.timezone.utc)
+        db.commit()
+            
         return True
     finally:
         db.close()
