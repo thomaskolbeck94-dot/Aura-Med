@@ -26,6 +26,7 @@ class APIKey(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     total_scans = Column(Integer, default=0)
+    daily_scans = Column(Integer, default=0)
     last_scan_at = Column(DateTime, nullable=True)
     
     client = relationship("Client", back_populates="api_keys")

@@ -2,6 +2,7 @@ import sqlite3
 import os
 import csv
 import io
+import datetime
 from typing import Optional, Dict, List
 
 DB_PATH = os.environ.get("AURAMED_DB_PATH", "auramed.db")
@@ -141,13 +142,41 @@ def is_valid_api_key(api_key: str) -> bool:
         if not client:
             return False
             
-        # Increment usage counter
-        import datetime
-        key_record.total_scans += 1
-        key_record.last_scan_at = datetime.datetime.now(datetime.timezone.utc)
-        db.commit()
-            
         return True
+    finally:
+        db.close()
+
+def increment_api_key_usage(api_key_str: str) -> bool:
+    """
+    Increments the daily and total scan count for an API key.
+    Returns True if successful, False if the daily limit (100) is reached.
+    """
+    db = SessionLocal()
+    try:
+        key_record = db.query(APIKey).filter(APIKey.key == api_key_str).first()
+        if not key_record:
+            return False
+            
+        now = datetime.datetime.now(datetime.timezone.utc)
+        
+        # Reset daily scans if it's a new day
+        if not key_record.last_scan_at or key_record.last_scan_at.date() < now.date():
+            key_record.daily_scans = 0
+            
+        # Check quota (e.g. 100 per day)
+        if key_record.daily_scans >= 100:
+            return False
+            
+        # Increment usage
+        key_record.daily_scans += 1
+        key_record.total_scans += 1
+        key_record.last_scan_at = now
+        
+        db.commit()
+        return True
+    except Exception:
+        db.rollback()
+        return False
     finally:
         db.close()
 

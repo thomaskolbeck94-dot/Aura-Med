@@ -13,6 +13,19 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def init_saas_db():
     Base.metadata.create_all(bind=engine)
+    
+    # Auto-migration for daily_scans (added in v0.2)
+    import sqlite3
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.execute("ALTER TABLE api_keys_saas ADD COLUMN daily_scans INTEGER DEFAULT 0;")
+        conn.commit()
+    except sqlite3.OperationalError:
+        # Column already exists
+        pass
+    finally:
+        if 'conn' in locals():
+            conn.close()
 
 def get_db():
     db = SessionLocal()
